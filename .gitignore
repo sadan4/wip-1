@@ -1,0 +1,15 @@
+# Logs
+logs
+*.log
+pnpm-debug.log*
+vite.config.ts.timestamp-*
+
+node_modules
+.DS_Store
+dist
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+*.tsbuildinfo
