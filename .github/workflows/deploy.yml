@@ -22,6 +22,8 @@ jobs:
         # TODO: figure out cache
       - name: pnpm i
         uses: pnpm/action-setup@v4
+        with:
+          version: 9
 
       - name: build & tsc
         env:
