@@ -10,11 +10,17 @@
     "tsc": "vue-tsc --build --force"
   },
   "dependencies": {
+    "@vscode/tree-sitter-wasm": "^0.0.2",
+    "@vueuse/core": "^11.0.3",
+    "@vueuse/integrations": "^11.0.3",
+    "acorn": "^8.12.1",
+    "idb-keyval": "^6.2.1",
     "vue": "^3.4.38",
     "vue-router": "^4.4.3"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
+    "@types/estree": "^1.0.5",
     "@types/node": "^20.16.1",
     "@vitejs/plugin-vue": "^5.1.2",
     "@vue/tsconfig": "^0.5.1",

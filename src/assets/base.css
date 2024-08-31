@@ -1,7 +1,7 @@
 /* color palette */
 :root {
-  --color-background: #000000;
-  --color-text: #ffffff;
+  --color-background: #292828;
+  --color-text: #d4be98;
 }
 
 /* reset */
@@ -13,13 +13,14 @@
   font-weight: normal;
 }
 
+a {
+  color: inherit;
+}
+
 body {
   min-height: 100vh;
   color: var(--color-text);
   background: var(--color-background);
-  transition:
-    color 0.5s,
-    background-color 0.5s;
   line-height: 1.6;
   font-family:
     Inter,
