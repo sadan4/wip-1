@@ -2,6 +2,20 @@
 :root {
   --color-background: #292828;
   --color-text: #d4be98;
+  --color-accent-dark: #00497799;
+  --color-accent: #72a4ed;
+
+  --color-accent-d90: color-mix(in srgb, var(--color-accent), transparent 90%);
+
+  --color-background-d10: color-mix(in srgb, var(--color-background), #000000 10%);
+  --color-background-d20: color-mix(in srgb, var(--color-background), #000000 20%);
+  --color-background-d30: color-mix(in srgb, var(--color-background), #000000 30%);
+  --color-background-l5: color-mix(in srgb, var(--color-background), #ffffff 2%);
+  --color-background-l20: color-mix(in srgb, var(--color-background), #ffffff 10%);
+  --color-text-d20: color-mix(in srgb, var(--color-text), transparent 20%);
+  --color-text-l30: color-mix(in srgb, var(--color-text), #ffffff 30%);
+
+  --color-disabled: color-mix(in srgb, var(--color-text), transparent 50%);
 }
 
 /* reset */

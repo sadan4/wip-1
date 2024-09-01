@@ -5,6 +5,7 @@ import { ASSETS_BASE, type DiscordReleaseChannel } from '@/apis/discord/constant
 import { isNonLiteral } from '@/apis/parser'
 import { computedAsync } from '@vueuse/core'
 import { computed, ref } from 'vue'
+import Select from './inputs/Select.vue'
 
 const scrapeConfig = ref({
     releaseChannel: "stable" as DiscordReleaseChannel,
@@ -28,15 +29,27 @@ const app = computedAsync(() => scrapeForBuild({ source: source.value }), null, 
 
 <template>
     <div>
-        <select v-model="sourceType">
-            <option value="latest">Latest</option>
-            <option value="archive">Archive</option>
-        </select>
-        <select v-model="scrapeConfig.releaseChannel">
-            <option value="stable">Stable</option>
-            <option value="canary">Canary</option>
-            <option value="ptb">PTB</option>
-        </select>
+        <Select v-model="sourceType" :entries="[{
+            type: 'label',
+            label: 'Source',
+        }, {
+            type: 'group',
+            children: [
+                { type: 'item', value: 'latest', label: 'Latest' },
+                { type: 'item', value: 'archive', label: 'Archive' },
+            ]
+        }]" />
+        <Select v-model="scrapeConfig.releaseChannel" :entries="[{
+            type: 'label',
+            label: 'Release Channel',
+        }, {
+            type: 'group',
+            children: [
+                { type: 'item', value: 'stable', label: 'Stable' },
+                { type: 'item', value: 'canary', label: 'Canary' },
+                { type: 'item', value: 'ptb', label: 'PTB' },
+            ],
+        }]" />
 
         <div v-if="!app">
             <p>Loading...</p>
