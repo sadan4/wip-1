@@ -1,6 +1,6 @@
 import { ASSETS_BASE, CHANNEL_ORIGINS, type DiscordReleaseChannel } from "./constants"
 import { $fetch } from "./proxy"
-import { getEnvBuildVars, parser } from "../parser"
+import { getEnvBuildVars } from "../parser"
 import { parse } from "acorn"
 
 export type ScrapeSource =
@@ -37,8 +37,7 @@ export async function scrapeForBuild(options: Partial<ScrapeOptions> = {}) {
     const envScriptEl = scriptEls.find(scriptEl => scriptEl.textContent?.includes("window.GLOBAL_ENV ="))
     if (!envScriptEl) throw new Error("Could not find window.GLOBAL_ENV script")
 
-    const envScriptTree = parser.parse(envScriptEl.textContent!)
-    const envVars = getEnvBuildVars(envScriptTree)
+    const envVars = getEnvBuildVars(envScriptEl.textContent!)
 
     const entryScriptNames = scriptEls
         .filter(scriptEl => scriptEl.src.startsWith(location.origin))
@@ -46,12 +45,12 @@ export async function scrapeForBuild(options: Partial<ScrapeOptions> = {}) {
         .filter(pathname => pathname.startsWith("/assets/"))
         .map(pathname => pathname.replace("/assets/", ""))
 
-    console.log("parsing entry script")
-    const firstEntryScript = await fetchDiscordAsset(entryScriptNames[0]).then(blob => blob.text())
-    console.time("parseEntryScript")
+    // console.log("parsing entry script")
+    // const firstEntryScript = await fetchDiscordAsset(entryScriptNames[0]).then(blob => blob.text())
+    // console.time("parseEntryScript")
     // parser.parse(firstEntryScript)
-    parse(firstEntryScript, { ecmaVersion: "latest" })
-    console.timeEnd("parseEntryScript")
+    // parse(firstEntryScript, { ecmaVersion: "latest" })
+    // console.timeEnd("parseEntryScript")
 
     return {
         releaseChannel,

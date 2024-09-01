@@ -1,7 +1,4 @@
-import { getKeyAsValue } from "./ast"
-import type { Tree } from "./treeSitter"
-
-const ENV_VARS = "window.GLOBAL_ENV"
+import { parseScript, stringify, queryMany, queryOne } from "./parse"
 
 export const UNREADABLE_KEYS = Symbol("buildVar.unreadableKeys")
 const IS_NONLITERAL = Symbol("value.isNonLiteral")
@@ -15,42 +12,25 @@ export function isNonLiteral(value: JsonType | NonLiteralValue): value is NonLit
 
 export type JsonType = string | number | boolean | null | JsonType[] | { [key: string]: JsonType }
 export type EnvBuildVars = Record<string | symbol, JsonType | NonLiteralValue> & { [UNREADABLE_KEYS]: symbol[] }
-export function getEnvBuildVars(tree: Tree, wrapNonLiterals = true) {
-    const language = tree.getLanguage()
-    // ${ENV_VARS} = @value
-    const envAssignQuery = language.query(`((assignment_expression
-            left: (member_expression) @obj
-            right: (object) @value)
-        (#eq? @obj ${JSON.stringify(ENV_VARS)}))`)
-
-    const envAssignCaptures = envAssignQuery.captures(tree.rootNode)
-    const envObj = envAssignCaptures.find(capture => capture.name === "value")?.node
+export function getEnvBuildVars(script: string, wrapNonLiterals = true) {
+    const program = parseScript(script)
+    const envObj = queryOne(program, "AssignmentExpression[left.object.name=window][left.property.name=GLOBAL_ENV] > ObjectExpression.right")
     if (!envObj) return null
 
-    const identQuery = language.query("(identifier)")
     const envVars: EnvBuildVars = { [UNREADABLE_KEYS]: [] }
-    for (const pair of envObj.namedChildren) {
-        const keyNode = pair.childForFieldName("key")
-        const valueNode = pair.childForFieldName("value")
-        if (!keyNode || !valueNode) continue
-
-        let key: string | symbol | null = getKeyAsValue(keyNode)
+    for (const { key: keyNode, value: valueNode } of queryMany(envObj, "Property.properties")) {
+        let key: string | symbol | null = queryOne(keyNode, "Identifier")?.name ?? null
         if (key == null) {
             key = Symbol("unreadableKey")
             envVars[UNREADABLE_KEYS].push(key)
         }
 
-        if (wrapNonLiterals && identQuery.matches(valueNode).length > 0) {
-            envVars[key] = { [IS_NONLITERAL]: true, expression: valueNode.text }
+        if (wrapNonLiterals && queryOne(valueNode, "Identifier")) {
+            envVars[key] = { [IS_NONLITERAL]: true, expression: stringify(valueNode) }
         } else {
-            envVars[key] = new Function("return " + valueNode.text)()
+            envVars[key] = new Function("return " + stringify(valueNode))()
         }
     }
 
     return envVars
-}
-
-export function getBuildNumber(tree: Tree) {
-    const language = tree.getLanguage()
-    // const query = language.query(`(identifier) @build`)
 }
