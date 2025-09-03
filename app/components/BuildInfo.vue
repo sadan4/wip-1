@@ -50,11 +50,11 @@ watch(build, async (build) => {
 <template>
     <div>
         <!-- <ArchivePicker /> -->
-        <select v-model="sourceType" value-key="value" :items="[
+        <Select v-model="sourceType" :items="[
             { value: 'latest', label: 'Latest' },
             { value: 'archive', label: 'Archive' },
         ]" class="w-48" />
-        <select v-model="scrapeConfig.releaseChannel" value-key="value" :items="[
+        <Select v-model="scrapeConfig.releaseChannel" value-key="value" :items="[
             { value: 'stable', label: 'Stable' },
             { value: 'canary', label: 'Canary' },
             { value: 'ptb', label: 'PTB' },
