@@ -1,36 +1,41 @@
 {
-  "name": "nuxt-app",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
-  },
-  "dependencies": {
-    "@nuxt/image": "1.10.0",
-    "@vueuse/core": "^13.5.0",
-    "acorn": "^8.15.0",
-    "astring": "^1.9.0",
-    "async": "^3.2.6",
-    "eslint-scope": "^8.4.0",
-    "esquery": "^1.6.0",
-    "estree-walker": "^3.0.3",
-    "idb-keyval": "^6.2.2",
-    "nuxt": "^4.1.0",
-    "shiki": "^3.8.0",
-    "typescript": "^5.6.3",
-    "vue": "^3.5.17",
-    "vue-router": "^4.5.1"
-  },
-  "devDependencies": {
-    "@types/async": "^3.2.24",
-    "@types/eslint-scope": "^8.3.1",
-    "@types/esquery": "^1.5.4",
-    "@types/estree": "^1.0.8",
-    "magic-esquery": "^0.0.2",
-    "type-fest": "^4.41.0"
-  }
+    "name": "nuxt-app",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "nuxt build",
+        "dev": "nuxt dev",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare",
+        "test": "vitest"
+    },
+    "dependencies": {
+        "@nuxt/image": "1.10.0",
+        "@sadan4/devtools-pretty-printer": "^1.0.4",
+        "@vueuse/core": "^13.5.0",
+        "acorn": "^8.15.0",
+        "astring": "^1.9.0",
+        "async": "^3.2.6",
+        "eslint-scope": "^8.4.0",
+        "esquery": "^1.6.0",
+        "estree-walker": "^3.0.3",
+        "idb-keyval": "^6.2.2",
+        "nuxt": "^4.1.0",
+        "shiki": "^3.8.0",
+        "ts-api-utils": "^2.1.0",
+        "typescript": "^5.9.2",
+        "vue": "^3.5.17",
+        "vue-router": "^4.5.1"
+    },
+    "devDependencies": {
+        "@types/async": "^3.2.24",
+        "@types/eslint-scope": "^8.3.1",
+        "@types/esquery": "^1.5.4",
+        "@types/estree": "^1.0.8",
+        "@vitest/ui": "3.2.4",
+        "magic-esquery": "^0.0.2",
+        "type-fest": "^4.41.0",
+        "vitest": "^3.2.4"
+    }
 }
